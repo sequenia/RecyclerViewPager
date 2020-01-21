@@ -121,6 +121,10 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
                     getCurrentPosition())) {
                 return bakPosition3;
             }
+            // TODO: don't transform position, if there's only 2 items
+            if(actualItemCount == 2) {
+                return position;
+            }
             return bakPosition1;
         }
     }
