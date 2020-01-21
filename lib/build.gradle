@@ -5,7 +5,7 @@ android {
     buildToolsVersion "$BUILD_TOOLS_VERSION"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 22
         targetSdkVersion TARGET_SDK_VERSION
         versionCode 27
         versionName "1.0.12"
@@ -25,9 +25,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided project(':stub-appcompat')
-    compile "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
-    compile "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly project(':stub-appcompat')
+    implementation "com.android.support:recyclerview-v7:$SUPPORT_LIBRARY_VERSION"
+    implementation "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
+    implementation "com.android.support:support-v4:$SUPPORT_LIBRARY_VERSION"
 }
