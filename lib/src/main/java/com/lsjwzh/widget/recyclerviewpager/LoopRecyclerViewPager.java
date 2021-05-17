@@ -21,8 +21,12 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
 
     @Override
     public void setAdapter(Adapter adapter) {
+        setAdapter(adapter, false);
+    }
+
+    public void setAdapter(Adapter adapter, boolean skipOnPageChangedListener) {
         super.setAdapter(adapter);
-        super.scrollToPosition(getMiddlePosition());
+        super.scrollToPosition(getMiddlePosition(), skipOnPageChangedListener);
     }
 
     @Override
@@ -61,8 +65,8 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
      * @param position target position
      */
     @Override
-    public void scrollToPosition(int position) {
-        super.scrollToPosition(transformInnerPositionIfNeed(position));
+    public void scrollToPosition(int position, boolean skipOnPageChangedListener) {
+        super.scrollToPosition(transformInnerPositionIfNeed(position), skipOnPageChangedListener);
     }
 
     /**
@@ -83,6 +87,15 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
             return 0;
         }
         return position % getActualItemCountFromAdapter();
+    }
+
+    public int getMiddlePosition() {
+        int middlePosition = Integer.MAX_VALUE / 2;
+        final int actualItemCount = getActualItemCountFromAdapter();
+        if (actualItemCount > 0 && middlePosition % actualItemCount != 0) {
+            middlePosition = middlePosition - middlePosition % actualItemCount;
+        }
+        return middlePosition;
     }
 
     private int getActualItemCountFromAdapter() {
@@ -143,14 +156,5 @@ public class LoopRecyclerViewPager extends RecyclerViewPager {
         }
 
         return currentChunkPosition;
-    }
-
-    private int getMiddlePosition() {
-        int middlePosition = Integer.MAX_VALUE / 2;
-        final int actualItemCount = getActualItemCountFromAdapter();
-        if (actualItemCount > 0 && middlePosition % actualItemCount != 0) {
-            middlePosition = middlePosition - middlePosition % actualItemCount;
-        }
-        return middlePosition;
     }
 }
